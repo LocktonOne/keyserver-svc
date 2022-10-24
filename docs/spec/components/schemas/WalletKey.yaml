@@ -1,0 +1,14 @@
+type: object
+required:
+  - type
+  - id
+properties:
+  type:
+    description: resource type
+    type: string
+    enum:
+      - wallet
+  id:
+    description: wallet identifier
+    type: string
+    example: 388108095960430b80554ac3efb6807a9f286854033aca47f6f466094ab50876

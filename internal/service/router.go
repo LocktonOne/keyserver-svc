@@ -1,6 +1,7 @@
 package service
 
 import (
+	"gitlab.com/tokene/keyserver-svc/internal/data/postgres"
 	"gitlab.com/tokene/keyserver-svc/internal/service/handlers"
 
 	"github.com/go-chi/chi"
@@ -15,10 +16,26 @@ func (s *service) router() chi.Router {
 		ape.LoganMiddleware(s.log),
 		ape.CtxMiddleware(
 			handlers.CtxLog(s.log),
+			handlers.CtxKDFQ(postgres.NewKDFQ(s.config.DB())),
+			handlers.CtxWalletsQ(postgres.NewWalletsQ(s.config.DB())),
+			handlers.CtxWalletsConfig(s.config.WalletsConfig()),
+			handlers.CtxEmailTokensQ(postgres.NewEmailTokensQ(s.config.DB())),
+			handlers.CtxTFAConfig(s.config.TFAConfig()),
 		),
 	)
 	r.Route("/integrations/keyserver-svc", func(r chi.Router) {
-		// configure endpoints here
+		r.Route("/wallet", func(r chi.Router) {
+			r.Post("/", handlers.CreateWallet)
+			r.Route("/{wallet-id}", func(r chi.Router) {
+				r.Get("/", handlers.GetWallet)
+
+				r.Post("/verification", handlers.RequestVerification)
+				r.Put("/verification", handlers.VerifyWallet)
+			})
+
+		})
+
+		r.Get("/kdf", handlers.GetKDF)
 	})
 
 	return r

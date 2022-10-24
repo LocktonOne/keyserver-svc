@@ -1,0 +1,15 @@
+allOf:
+  - $ref: '#/components/schemas/VerifyWalletRequestKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - token
+        properties:
+          token:
+            description: email verification token
+            type: string
+            example: JOqIgfCNSjnGWDrTPWbW

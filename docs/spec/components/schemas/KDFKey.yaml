@@ -1,0 +1,15 @@
+type: object
+required:
+  - id
+  - type
+properties:
+  type:
+    type: string
+    enum:
+      - kdf
+  id:
+    type: string
+    example: 2
+    enum:
+      - 1
+      - 2

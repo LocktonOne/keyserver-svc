@@ -1,0 +1,32 @@
+allOf:
+  - $ref: '#/components/schemas/WalletKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - wallet_id
+          - email
+          - salt
+          - keychain_data
+        properties:
+          wallet_id:
+            description: >-
+              unique identifier of the user account generated during the wallet
+              creation
+            type: string
+            example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+          email:
+            description: email address provided during the wallet creation
+            type: string
+            example: email@mail.com
+          salt:
+            description: client-generated salt
+            type: string
+            example: qonp0sJgd30NQ916fzpO2A==
+          keychain_data:
+            description: arbitrary client-provided string
+            type: string
+            example: eyJJViI6IlRaRHppWWRTNEdKMjBYbi...RlTmFtZSI6ImdjbSJ9

@@ -1,0 +1,9 @@
+type: object
+required:
+  - type
+properties:
+  type:
+    description: request type
+    type: string
+    enum:
+      - wallet_verification

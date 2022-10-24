@@ -1,0 +1,39 @@
+allOf:
+  - $ref: '#/components/schemas/WalletKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - wallet_id
+          - email
+          - keychain_data
+          - verified
+          - salt
+        properties:
+          wallet_id:
+            description: >-
+              unique identifier of the user account generated during the wallet
+              creation
+            type: string
+            example: GBSR6JG5AYSAW7HK6EGJFYVIVN54LVGSY3ZLJ6X3IBQZ766EJABCZQTH
+          email:
+            description: email address provided during the wallet creation
+            type: string
+            example: email@mail.com
+          keychain_data:
+            description: client-provided string derived from wallet keys
+            type: string
+            example: eyJJViI6IlRaRHppWWRTNEdKMjBYbisiLCJjaXBo...CJtb2RlTmFtZSI6ImdjbSJ9
+          verified:
+            description: >-
+              shows whether or not the wallet is verified (whether the user of a
+              wallet has been verified via email link)
+            type: boolean
+            example: true
+          salt:
+            description: client-generated salt
+            type: string
+            example: qonp0sJgd30NQ916fzpO2A==

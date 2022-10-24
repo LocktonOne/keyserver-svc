@@ -1,0 +1,35 @@
+allOf:
+  - $ref: '#/components/schemas/KDFKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        description: KDF parameters which should be used for derivation
+        type: object
+        required:
+          - algorithm
+          - bits
+          - n
+          - r
+          - p
+        properties:
+          algorithm:
+            description: kdf algorithm
+            type: string
+            example: scrypt
+          bits:
+            type: integer
+            example: 256
+          'n':
+            type: integer
+            example: 4096
+          r:
+            type: integer
+            example: 8
+          p:
+            type: integer
+            example: 1
+          salt:
+            type: string
+            example: E8C7204F5E3E91FA87662308B7E459F01757B005C647E49A7A49AEF32845D868

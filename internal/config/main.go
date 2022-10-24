@@ -13,6 +13,8 @@ type Config interface {
 	pgdb.Databaser
 	types.Copuser
 	comfig.Listenerer
+	WalletsConfig() WalletsConfig
+	TFAConfig() TFAConfig
 }
 
 type config struct {
@@ -20,7 +22,9 @@ type config struct {
 	pgdb.Databaser
 	types.Copuser
 	comfig.Listenerer
-	getter kv.Getter
+	getter        kv.Getter
+	walletsConfig *WalletsConfig
+	tfaConfig     *TFAConfig
 }
 
 func New(getter kv.Getter) Config {

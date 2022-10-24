@@ -6,6 +6,7 @@ import (
 	"gitlab.com/distributed_lab/kit/copus/types"
 	"gitlab.com/distributed_lab/kit/kv"
 	"gitlab.com/distributed_lab/kit/pgdb"
+	"gitlab.com/tokene/keyserver-svc/internal/notificator"
 )
 
 type Config interface {
@@ -15,6 +16,7 @@ type Config interface {
 	comfig.Listenerer
 	WalletsConfig() WalletsConfig
 	TFAConfig() TFAConfig
+	Notificator() *notificator.Connector
 }
 
 type config struct {
@@ -25,6 +27,7 @@ type config struct {
 	getter        kv.Getter
 	walletsConfig *WalletsConfig
 	tfaConfig     *TFAConfig
+	notificator   *notificator.Connector
 }
 
 func New(getter kv.Getter) Config {

@@ -1,6 +1,8 @@
 package service
 
 import (
+	"gitlab.com/tokene/keyserver-svc/internal/data"
+	"gitlab.com/tokene/keyserver-svc/internal/data/postgres"
 	"net"
 	"net/http"
 
@@ -12,10 +14,12 @@ import (
 )
 
 type service struct {
-	log      *logan.Entry
-	copus    types.Copus
-	listener net.Listener
-	config   config.Config
+	log         *logan.Entry
+	copus       types.Copus
+	listener    net.Listener
+	config      config.Config
+	emailTokens data.EmailTokensQ
+	wallets     data.WalletsQ
 }
 
 func (s *service) run() error {
@@ -31,10 +35,12 @@ func (s *service) run() error {
 
 func newService(cfg config.Config) *service {
 	return &service{
-		log:      cfg.Log(),
-		copus:    cfg.Copus(),
-		listener: cfg.Listener(),
-		config:   cfg,
+		log:         cfg.Log(),
+		copus:       cfg.Copus(),
+		listener:    cfg.Listener(),
+		config:      cfg,
+		emailTokens: postgres.NewEmailTokensQ(cfg.DB()),
+		wallets:     postgres.NewWalletsQ(cfg.DB()),
 	}
 }
 

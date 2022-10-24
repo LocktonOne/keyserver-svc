@@ -17,9 +17,9 @@ func (s *service) router() chi.Router {
 		ape.CtxMiddleware(
 			handlers.CtxLog(s.log),
 			handlers.CtxKDFQ(postgres.NewKDFQ(s.config.DB())),
-			handlers.CtxWalletsQ(postgres.NewWalletsQ(s.config.DB())),
+			handlers.CtxWalletsQ(s.wallets),
 			handlers.CtxWalletsConfig(s.config.WalletsConfig()),
-			handlers.CtxEmailTokensQ(postgres.NewEmailTokensQ(s.config.DB())),
+			handlers.CtxEmailTokensQ(s.emailTokens),
 			handlers.CtxTFAConfig(s.config.TFAConfig()),
 		),
 	)

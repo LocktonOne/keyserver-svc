@@ -1,0 +1,71 @@
+parameters:
+  - name: wallet-id
+    in: path
+    description: related wallet id
+    required: true
+    schema:
+      type: string
+post:
+  tags:
+    - Wallet
+    - Wallet Verification
+  summary: Request Wallet Verification
+  description: |
+    Instant delivery is not guaranteed.
+  operationId: requestWalletVerification
+  responses:
+    '204':
+      description: token created
+    '400':
+      description: email already confirmed, walletID not specified
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    '404':
+      description: wallet not found
+    '500':
+      description: failed to get/create/send token
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+put:
+  tags:
+    - Wallet
+    - Wallet Verification
+  summary: Verify Wallet
+  description: >
+    After the wallet is created (and `verified` is false), a user should receive an email with
+    the verification link with client router payload
+  operationId: verifyWallet
+  requestBody:
+    content:
+      application/vnd.api+json:
+        schema:
+          type: object
+          properties:
+            data:
+              type: object
+              required: true
+              $ref: '#/components/schemas/VerifyWalletRequest'
+    description: Email verification token
+    required: true
+  responses:
+    '204':
+      description: Wallet was verified
+    '400':
+      description: invalid input parameters
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    '404':
+      description: wallet not found
+    '500':
+      description: failed to verify token
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+

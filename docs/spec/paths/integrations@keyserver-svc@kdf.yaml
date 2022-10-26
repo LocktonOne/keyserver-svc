@@ -1,0 +1,38 @@
+get:
+  tags:
+    - KDF
+  summary: KDF Params
+  description: >
+    Returns current default derivation parameters or parameters used to derive
+    a particular wallet. 
+
+
+    ### Parameters
+
+
+    `email` - will return KDF parameters for wallet keychain, `404 Not Found` if
+    email is unknown.
+
+
+    If the `email` parameter is not specified, the default KDF will be used.
+  operationId: getKDF
+  parameters:
+    - name: email
+      in: query
+      description: will return KDF parameters for the wallet keychain
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/KDF'
+    '404':
+      description: KDF not found
+    '500':
+      description: Internal Error

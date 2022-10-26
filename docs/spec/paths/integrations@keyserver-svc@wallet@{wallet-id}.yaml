@@ -1,0 +1,30 @@
+parameters:
+  - name: wallet-id
+    in: path
+    description: id of wallet
+    required: true
+    schema:
+      type: string
+get:
+  tags:
+    - Wallet
+  summary: Get Wallet
+  description: |
+    Returns wallet by its id.
+  operationId: getWallet
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Wallet'
+    '403':
+      description: wallet verification required
+    '404':
+      description: wallet not found
+    '500':
+      description: failed to get wallet

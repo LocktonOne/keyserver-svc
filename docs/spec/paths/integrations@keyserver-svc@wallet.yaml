@@ -1,0 +1,63 @@
+post:
+  tags:
+    - Wallet
+  summary: Create Wallet
+  operationId: createWallet
+  requestBody:
+    content:
+      application/vnd.api+json:
+        schema:
+          type: object
+          required:
+            - data
+          properties:
+            data:
+              type: object
+              $ref: '#/components/schemas/CreateWalletRequest'
+  responses:
+    '201':
+      description: current wallet state
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '#/components/schemas/Wallet'
+    '400':
+      description: invalid request
+    '409':
+      description: wallet conflict
+    '500':
+      description: failed to save wallets
+
+patch:
+  tags:
+    - Wallet
+  summary: Change Password
+  operationId: changePassword
+  requestBody:
+    content:
+      application/vnd.api+json:
+        schema:
+          type: object
+          required:
+            - data
+          properties:
+            data:
+              type: object
+              $ref: '#/components/schemas/ChangePasswordRequest'
+  responses:
+    '204':
+      description: password successfully updated
+    '400':
+      description: invalid request
+    '403':
+      description: mismatch walletID with email and password
+    '404':
+      description: wallet not found
+    '500':
+      description: failed to save wallets, failed to get wallet
+

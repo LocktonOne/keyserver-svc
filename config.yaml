@@ -1,5 +1,6 @@
 log:
   disable_sentry: true
+  level: debug
 
 db:
   url: db_url
@@ -13,3 +14,15 @@ cop:
   upstream: "http://..."
   service_name: keyserver-svc
   service_port: 80
+
+wallets:
+  disable_confirm: true
+
+notificator:
+  disabled: true
+  client_router: http://localhost:8000
+  endpoint: http://traefik/integrations/notifications
+
+tfa_params:
+  dictionary: "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+  digits: 8

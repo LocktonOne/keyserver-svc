@@ -17,7 +17,13 @@ func CreateWallet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	wallet, _ := WalletsQ(r).FilterByEmail(request.Attributes.Email).Get()
+	wallet, err := WalletsQ(r).FilterByEmail(request.Attributes.Email).Get()
+	if err != nil {
+		Log(r).WithError(err).Error("failed to get wallet")
+		ape.RenderErr(w, problems.InternalError())
+		return
+	}
+
 	if wallet != nil {
 		ape.RenderErr(w, problems.Conflict())
 		return
@@ -42,7 +48,7 @@ func CreateWallet(w http.ResponseWriter, r *http.Request) {
 		Email:     request.Attributes.Email,
 	})
 	if err != nil {
-		Log(r).WithError(err).Error("failed to create email token")
+		Log(r).WithError(err).Warn("failed to create email token")
 		return
 	}
 

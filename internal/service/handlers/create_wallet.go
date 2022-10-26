@@ -49,7 +49,6 @@ func CreateWallet(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		Log(r).WithError(err).Warn("failed to create email token")
-		return
 	}
 
 	response := resources.WalletResponse{

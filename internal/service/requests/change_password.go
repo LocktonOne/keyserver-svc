@@ -7,12 +7,12 @@ import (
 	"net/http"
 )
 
-type CreateWalletRequest struct {
-	Data resources.CreateWalletRequest `json:"data"`
+type ChangePasswordRequest struct {
+	Data resources.ChangePasswordRequest `json:"data"`
 }
 
-func NewCreateWalletRequest(r *http.Request) (resources.CreateWalletRequest, error) {
-	var request CreateWalletRequest
+func NewChangePasswordRequest(r *http.Request) (resources.ChangePasswordRequest, error) {
+	var request ChangePasswordRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 

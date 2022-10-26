@@ -26,6 +26,8 @@ func (s *service) router() chi.Router {
 	r.Route("/integrations/keyserver-svc", func(r chi.Router) {
 		r.Route("/wallet", func(r chi.Router) {
 			r.Post("/", handlers.CreateWallet)
+			r.Patch("/", handlers.ChangePassword)
+
 			r.Route("/{wallet-id}", func(r chi.Router) {
 				r.Get("/", handlers.GetWallet)
 

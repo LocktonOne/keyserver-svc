@@ -44,7 +44,7 @@ func (q *WalletsQ) Select() ([]data.Wallet, error) {
 
 func (q *WalletsQ) Update(wallet data.Wallet) error {
 	clauses := structs.Map(wallet)
-	stmt := sq.Update(walletsTableName).SetMap(clauses).Where(sq.Eq{"wallet_id": wallet.WalletId})
+	stmt := sq.Update(walletsTableName).SetMap(clauses).Where(sq.Eq{"id": wallet.Id})
 
 	err := q.db.Exec(stmt)
 	return err

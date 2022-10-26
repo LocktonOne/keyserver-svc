@@ -2,7 +2,7 @@ configVersion: 1
 project: 'backend'
 ---
 image: builder
-from: golang:1.16.2-stretch
+from: golang:1.18-alpine
 docker:
   WORKDIR: /go/src/gitlab.com/tokene/keyserver-svc
 git:
@@ -12,10 +12,17 @@ git:
     setup:
     - "**/*"
 shell:
+  install:
+    - apk add git build-base
+    - git config --global url."https://gitlab-ci-token:{{ env "CI_JOB_TOKEN" }}@gitlab.com/".insteadOf https://gitlab.com/
+    - go env -w GOPRIVATE=gitlab.com/*
   setup:
-  - export CGO_ENABLED=0
-  - export GO111MODULE=off
+  - export CGO_ENABLED=1
+  - export GO111MODULE=on
   - export GOOS=linux
+  - cd /go/src/gitlab.com/tokene/keyserver-svc
+  - go mod tidy
+  - go mod vendor
   - go build  -o /usr/local/bin/keyserver-svc  /go/src/gitlab.com/tokene/keyserver-svc
 
 ---

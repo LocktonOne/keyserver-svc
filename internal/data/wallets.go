@@ -15,10 +15,9 @@ type WalletsQ interface {
 
 type Wallet struct {
 	Id           int64  `db:"id" structs:"-"`
-	WalletId     string `db:"wallet_id"`
-	Email        string `db:"email"`
-	KeychainData string `db:"keychain_data"`
-	Salt         string `db:"salt"`
-	Verified     bool   `db:"verified"`
-	//VerificationToken string  `db:"verification_token"`
+	WalletId     string `db:"wallet_id" structs:"wallet_id"`
+	Email        string `db:"email" structs:"email"`
+	KeychainData string `db:"keychain_data" structs:"keychain_data"`
+	Salt         string `db:"salt" structs:"salt"`
+	Verified     bool   `db:"verified" structs:"verified"`
 }

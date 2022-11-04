@@ -42,5 +42,14 @@ func VerifyWallet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	wallet.Verified = true
+
+	err = WalletsQ(r).Update(*wallet)
+	if err != nil {
+		Log(r).WithError(err).Error("failed to verify wallet")
+		ape.RenderErr(w, problems.InternalError())
+		return
+	}
+
 	w.WriteHeader(http.StatusNoContent)
 }

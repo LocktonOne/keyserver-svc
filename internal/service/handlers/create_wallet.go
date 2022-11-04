@@ -43,9 +43,10 @@ func CreateWallet(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = EmailTokensQ(r).Create(data.EmailToken{
-		Token:     TFAConfig(r).Token(),
-		Confirmed: WalletsConfig(r).DisableConfirm,
-		Email:     request.Attributes.Email,
+		Token:      TFAConfig(r).Token(),
+		Confirmed:  WalletsConfig(r).DisableConfirm,
+		Email:      request.Attributes.Email,
+		LastSentAt: nil,
 	})
 	if err != nil {
 		Log(r).WithError(err).Warn("failed to create email token")

@@ -39,9 +39,10 @@ func RequestVerification(w http.ResponseWriter, r *http.Request) {
 
 	if token == nil {
 		err = EmailTokensQ(r).Create(data.EmailToken{
-			Token:     TFAConfig(r).Token(),
-			Confirmed: WalletsConfig(r).DisableConfirm,
-			Email:     wallet.Email,
+			Token:      TFAConfig(r).Token(),
+			Confirmed:  WalletsConfig(r).DisableConfirm,
+			Email:      wallet.Email,
+			LastSentAt: nil,
 		})
 		if err != nil {
 			Log(r).WithError(err).Error("failed to create email token")

@@ -51,7 +51,7 @@ func sendVerifications(app *service, log *logan.Entry) error {
 			notificator.RedirectTypeEmailVerification,
 			map[string]interface{}{
 				"wallet_id": wallet.WalletId,
-				"token":     token,
+				"token":     token.Token,
 			})
 
 		err = app.config.Notificator().SendVerificationLink(token.Email, payload)

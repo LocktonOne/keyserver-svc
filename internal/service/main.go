@@ -26,6 +26,8 @@ func (s *service) run() error {
 	s.log.Info("Service started")
 	r := s.router()
 
+	go s.runVerificationSender()
+
 	if err := s.copus.RegisterChi(r); err != nil {
 		return errors.Wrap(err, "cop failed")
 	}

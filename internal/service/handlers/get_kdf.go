@@ -20,9 +20,15 @@ func GetKDF(w http.ResponseWriter, r *http.Request) {
 
 	if email != "" { // load wallet KDF
 		wallet, err := WalletsQ(r).FilterByEmail(email).Get()
-		if err != nil || wallet == nil {
+		if err != nil {
 			Log(r).WithError(err).Error("failed to get wallet")
 			ape.RenderErr(w, problems.InternalError())
+			return
+		}
+
+		if wallet == nil {
+			Log(r).Error("wallet not found")
+			ape.RenderErr(w, problems.NotFound())
 			return
 		}
 

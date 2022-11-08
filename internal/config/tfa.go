@@ -1,10 +1,11 @@
 package config
 
 import (
+	"crypto/rand"
 	"gitlab.com/distributed_lab/figure"
 	"gitlab.com/distributed_lab/kit/kv"
 	"gitlab.com/distributed_lab/logan/v3/errors"
-	"math/rand"
+	"math/big"
 )
 
 type TFAConfig struct {
@@ -16,9 +17,12 @@ func (params TFAConfig) Token() string {
 	n := params.Digits
 	source := params.Dictionary
 
+	bg := big.NewInt(int64(len(source)))
+
 	b := make([]byte, n)
 	for i := range b {
-		b[i] = source[rand.Intn(len(source))]
+		n, _ := rand.Int(rand.Reader, bg)
+		b[i] = source[n.Int64()]
 	}
 	return string(b)
 }

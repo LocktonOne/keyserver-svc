@@ -40,5 +40,5 @@ type CreateNotificationRelationships struct {
 }
 
 type VerificationPayload struct {
-	Link string `json:"Link"`
+	Code string `json:"Code"`
 }

@@ -1,0 +1,20 @@
+allOf:
+  - $ref: '#/components/schemas/WalletKey'
+  - type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: email address provided during the wallet creation
+            type: string
+            example: email@mail.com
+          password:
+            description: password
+            type: string
+            example: password

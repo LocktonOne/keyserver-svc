@@ -27,6 +27,7 @@ func (s *service) router() chi.Router {
 		r.Route("/wallet", func(r chi.Router) {
 			r.Post("/", handlers.CreateWallet)
 			r.Patch("/", handlers.ChangePassword)
+			r.Delete("/", handlers.DeleteWallet)
 
 			r.Route("/{wallet-id}", func(r chi.Router) {
 				r.Get("/", handlers.GetWallet)

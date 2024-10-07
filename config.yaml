@@ -24,5 +24,4 @@ notificator:
   endpoint: http://traefik/integrations/notifications
 
 tfa_params:
-  dictionary: "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-  digits: 8
+  digits: 6

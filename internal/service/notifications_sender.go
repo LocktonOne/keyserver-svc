@@ -3,8 +3,6 @@ package service
 import (
 	"gitlab.com/distributed_lab/logan/v3"
 	"gitlab.com/distributed_lab/logan/v3/errors"
-	"gitlab.com/tokend/clienturl"
-	"gitlab.com/tokene/keyserver-svc/internal/notificator"
 	"time"
 )
 
@@ -41,20 +39,7 @@ func sendVerifications(app *service, log *logan.Entry) error {
 	}
 
 	for _, token := range tokens {
-		wallet, err := app.wallets.FilterByEmail(token.Email).Get()
-		if err != nil {
-			log.WithError(err).WithField("email", token.Email).Warn("wallet with this email does not exist")
-			continue
-		}
-
-		payload := clienturl.NewPayload(
-			notificator.RedirectTypeEmailVerification,
-			map[string]interface{}{
-				"wallet_id": wallet.WalletId,
-				"token":     token.Token,
-			})
-
-		err = app.config.Notificator().SendVerificationLink(token.Email, payload)
+		err = app.config.Notificator().SendVerificationLink(token.Email, token.Token)
 		if err != nil {
 			log.WithError(err).WithField("email", token.Email).Warn("failed to send verification link")
 			continue

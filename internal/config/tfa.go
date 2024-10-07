@@ -1,37 +1,32 @@
 package config
 
 import (
-	"crypto/rand"
+	"fmt"
+	"github.com/spf13/cast"
 	"gitlab.com/distributed_lab/figure"
 	"gitlab.com/distributed_lab/kit/kv"
 	"gitlab.com/distributed_lab/logan/v3/errors"
-	"math/big"
+	"math"
+	"math/rand"
 )
 
 type TFAConfig struct {
-	Dictionary string `fig:"dictionary"`
-	Digits     int    `fig:"digits"`
+	Digits int `fig:"digits"`
 }
 
 func (params TFAConfig) Token() string {
-	n := params.Digits
-	source := params.Dictionary
+	digits := params.Digits
 
-	bg := big.NewInt(int64(len(source)))
-
-	b := make([]byte, n)
-	for i := range b {
-		n, _ := rand.Int(rand.Reader, bg)
-		b[i] = source[n.Int64()]
-	}
-	return string(b)
+	minNum := cast.ToInt(math.Pow10(int(digits - 1)))
+	maxNum := cast.ToInt(math.Pow10(int(digits)))
+	fmt.Println(minNum, maxNum)
+	return cast.ToString(rand.Intn(maxNum-minNum) + minNum)
 }
 
 func (c *config) TFAConfig() TFAConfig {
 	if c.tfaConfig == nil {
 		result := TFAConfig{
-			Dictionary: "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz",
-			Digits:     8,
+			Digits: 6,
 		}
 
 		err := figure.

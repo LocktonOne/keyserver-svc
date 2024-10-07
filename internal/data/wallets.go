@@ -8,6 +8,7 @@ type WalletsQ interface {
 
 	Create(wallet Wallet) (int64, error)
 	Update(wallet Wallet) error
+	Delete(walletID string) error
 
 	FilterByEmail(email string) WalletsQ
 	FilterByWalletID(walletID string) WalletsQ

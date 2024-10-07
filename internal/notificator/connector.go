@@ -3,10 +3,8 @@ package notificator
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"gitlab.com/distributed_lab/logan/v3"
 	"gitlab.com/distributed_lab/logan/v3/errors"
-	"gitlab.com/tokend/clienturl"
 	"gitlab.com/tokene/keyserver-svc/resources"
 	"io/ioutil"
 	"net/http"
@@ -60,19 +58,14 @@ func (c *Connector) IsDisabled() bool {
 	return c.disabled
 }
 
-func (c *Connector) SendVerificationLink(address string, payload clienturl.Payload) error {
+func (c *Connector) SendVerificationLink(address string, code string) error {
 	if c.disabled {
 		c.log.WithFields(logan.F{"topic": topicEmailConfirm, "email": address}).Warn("notificator disabled")
 		return nil
 	}
 
-	encoded, err := payload.Encode()
-	if err != nil {
-		return errors.Wrap(err, "failed to encode payload")
-	}
-
 	verifyPayload := VerificationPayload{
-		Link: fmt.Sprintf("%s/%s/%s", c.conf.ClientRouter, "r", encoded),
+		Code: code,
 	}
 
 	return c.sendEmail(topicEmailConfirm, address, MessageAttrs{Payload: verifyPayload})

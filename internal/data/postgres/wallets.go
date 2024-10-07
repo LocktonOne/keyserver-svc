@@ -46,8 +46,7 @@ func (q *WalletsQ) Update(wallet data.Wallet) error {
 	clauses := structs.Map(wallet)
 	stmt := sq.Update(walletsTableName).SetMap(clauses).Where(sq.Eq{"id": wallet.Id})
 
-	err := q.db.Exec(stmt)
-	return err
+	return q.db.Exec(stmt)
 }
 
 func (q *WalletsQ) Create(wallet data.Wallet) (int64, error) {
@@ -68,4 +67,10 @@ func (q *WalletsQ) FilterByEmail(email string) data.WalletsQ {
 func (q *WalletsQ) FilterByWalletID(walletID string) data.WalletsQ {
 	q.sql = q.sql.Where(sq.Eq{"wallet_id": walletID})
 	return q
+}
+
+func (q *WalletsQ) Delete(walletID string) error {
+	stmt := sq.Delete(walletsTableName).Where(sq.Eq{"id": walletID})
+
+	return q.db.Exec(stmt)
 }
